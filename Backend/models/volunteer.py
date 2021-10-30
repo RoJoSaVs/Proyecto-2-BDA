@@ -1,11 +1,16 @@
-# import models.model
+from  models.model import *
 
-class Volunteer:
+class Volunteer(Model):
     def __init__(self, name, age, country):
-        self.name = name
         self.age = age
-        self.country = country
+        Model.__init__(self, name, country)
 
-    def get_data(self):
-      attributes = [self.name, self.age, self.country]
-      return attributes
+    # Returns isntance attribute values
+    def get_attributes(self):
+        attributes = [self.name, self.age, self.country]
+        return attributes
+
+    # Returns query string with all attributes needed
+    def get_attribute_string(self):
+        attributes = self.get_attributes()
+        return "CREATE (v:Volunteer {v_name: '" + attributes[0] + "', v_country: '" + attributes[2] + "', v_age: " + str(attributes[1]) + "})"
