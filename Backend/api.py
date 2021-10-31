@@ -25,24 +25,48 @@ def api_all():
         abort(404)
 
 
-@app.route('/api', methods=['POST'])
+# Route to add a new node
+@app.route('/api/add', methods=['POST'])
 def add_single_node():
     try:
         data = request.json
-        request_value = data['email']
-        response = ""
-        if (response == None):
-            return jsonify("Hola")
-        else:
-            return jsonify(-1)
+        node_type = data['type']
+        attributes = jsonjson_creation_parse(node_type, data)
+        return jsonify(create_node_entity(node_type, attributes))
     except:
         abort(404)
+
+
+# Route to create relation between ong and project
+@app.route('/api/relation/ong', methods=['POST'])
+def relation_ong_project():
+    try:
+        data = request.json
+        ong = data['ong']
+        project = data['project']
+        return jsonify(create_relation_ong_project(ong, project))
+    except:
+        abort(404)
+
+
+# Route to create relation between volunteer and project
+@app.route('/api/relation/volunteer', methods=['POST'])
+def relation_volunteer_project():
+    try:
+        data = request.json
+        volunteer = data['volunteer']
+        project = data['project']
+        return jsonify(create_relation_volunteer_project(volunteer, project))
+    except:
+        abort(404)
+
 
 
 @app.route('/api/query1', methods=['GET'])
 def query1():
     try:
-        return jsonify(0)
+        request_value = request.args.get(request_param)
+        return jsonify(get_query_1(request_value))
     except:
         abort(404)
 
@@ -50,7 +74,8 @@ def query1():
 @app.route('/api/query2', methods=['GET'])
 def query2():
     try:
-        return jsonify(0)
+        request_value = request.args.get(request_param)
+        return jsonify(get_query_2(request_value))
     except:
         abort(404)
 
@@ -66,7 +91,8 @@ def query3():
 @app.route('/api/query4', methods=['GET'])
 def query4():
     try:
-        return jsonify(get_query_3())
+        request_value = request.args.get(request_param)
+        return jsonify(get_query_4(request_value))
     except:
         abort(404)
 
