@@ -6,6 +6,7 @@ connection_string = os.environ['CONNECTION_STRING']
 user = os.environ['USERNAME']
 password = os.environ['PASSWORD']
 
+
 # Create a connection between server and API, handle queries and return fetched data from DB server
 class DriverLifecycleCRUD:
     def __init__(self, uri, auth):
@@ -32,3 +33,5 @@ class DriverLifecycleCRUD:
             return nodes
         except NameError:
             return NameError
+
+database_crud = DriverLifecycleCRUD(connection_string, (user, password))

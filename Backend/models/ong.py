@@ -9,7 +9,7 @@ class Ong(Model):
         return [self.name, self.country]
 
     # Returns query string with all attributes needed
-    def get_attribute_string(self):
+    def get_creation_string(self):
         attributes = self.get_attributes()
         return "CREATE (o:ONG {o_name: '" + attributes[0] + "', o_country: '" + attributes[1] + "'})"
         

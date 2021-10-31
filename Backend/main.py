@@ -15,6 +15,9 @@ from models.instance_creator import *
 # Package name should be used
 # install("neo4j")
 # install("pytz")
+# install("dnspython")
+# install("Flask")
+# install("Flask-Cors")
 # install("py2neo")
 
 

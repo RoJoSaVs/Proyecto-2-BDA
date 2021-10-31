@@ -11,6 +11,6 @@ class Volunteer(Model):
         return attributes
 
     # Returns query string with all attributes needed
-    def get_attribute_string(self):
+    def get_creation_string(self):
         attributes = self.get_attributes()
         return "CREATE (v:Volunteer {v_name: '" + attributes[0] + "', v_country: '" + attributes[2] + "', v_age: " + str(attributes[1]) + "})"

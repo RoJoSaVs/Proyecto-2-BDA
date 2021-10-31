@@ -14,7 +14,7 @@ class Model:
 
     # Return a creation string
     def creation_query(self):
-        creation_query_string = self.get_attribute_string()
+        creation_query_string = self.get_creation_string()
         return creation_query_string
 
     
