@@ -11,7 +11,7 @@ CORS(app, support_credentials=True)
 @app.route('/', methods=['GET'])
 def home():
     try:
-        return jsonify(0)
+        return render_template('Snake.html')
     except:
         abort(404)
 
@@ -65,7 +65,7 @@ def relation_volunteer_project():
 @app.route('/api/query1', methods=['GET'])
 def query1():
     try:
-        request_value = request.args.get(request_param)
+        request_value = request.args.get('ong')
         return jsonify(get_query_1(request_value))
     except:
         abort(404)
@@ -74,7 +74,7 @@ def query1():
 @app.route('/api/query2', methods=['GET'])
 def query2():
     try:
-        request_value = request.args.get(request_param)
+        request_value = request.args.get('project')
         return jsonify(get_query_2(request_value))
     except:
         abort(404)
@@ -91,7 +91,7 @@ def query3():
 @app.route('/api/query4', methods=['GET'])
 def query4():
     try:
-        request_value = request.args.get(request_param)
+        request_value = request.args.get('volunteer')
         return jsonify(get_query_4(request_value))
     except:
         abort(404)

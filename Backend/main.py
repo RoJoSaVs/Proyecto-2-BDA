@@ -1,8 +1,8 @@
 import subprocess
 import sys
-import database_handler.database_crud
-from models.instance_creator import *
-
+# import database_handler.database_crud
+# from models.instance_creator import *
+# from api import *
 
 
 
@@ -20,5 +20,5 @@ from models.instance_creator import *
 # install("Flask-Cors")
 # install("py2neo")
 
-
+from api import *
 # Run the files that make the program works
