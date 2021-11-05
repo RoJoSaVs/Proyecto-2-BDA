@@ -1,315 +1,136 @@
-import * as React from "react";
+import React from 'react';
+import axios, { CancelTokenSource } from 'axios';
+import { withStyles, Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-interface IFormProps {
-  /* The http path that the form will be posted to */
-  action: string;
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import {Dialog,DialogContent,DialogActions,DialogContentText,CircularProgress} from '@material-ui/core';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+
+interface Employee {
+  name: string;
+  job: string;
+  id: string;
+};
+
+const StyledTableCell = withStyles((theme: Theme) =>
+  createStyles({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }),
+)(TableCell);
+
+const StyledTableRow = withStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+      },
+    },
+  }),
+)(TableRow);
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
+
+interface IPost {
+  "p_name": string,
+  "v_name": string,
+  "p_country": string
+  "p_reach": string
+  "p_duration": number
 }
 
-export interface IValues {
-  /* Key value pairs for all the field values with key being the field name */
-  [key: string]: any;
-}
+const defaultPosts: IPost[] = [];
 
-export interface IErrors {
-  /* The validation error messages for each field (key is the field name */
-  [key: string]: string;
-}
 
-export interface IFormState {
-  /* The field values */
-  values: IValues;
+const App = () => {
+  const classes = useStyles();
 
-  /* The field validation error messages */
-  errors: IErrors;
+  const [posts, setPosts]: [IPost[], (posts: IPost[]) => void] = React.useState(
+    defaultPosts
+  );
 
-  /* Whether the form has been successfully submitted */
-  submitSuccess?: boolean;
-}
+  const [loading, setLoading]: [
+    boolean,
+    (loading: boolean) => void
+  ] = React.useState<boolean>(true);
 
-export default class Form extends React.Component<IFormProps, IFormState> {
-  constructor(props: IFormProps) {
-    super(props);
+  const [error, setError]: [string, (error: string) => void] = React.useState(
+    ''
+  );
 
-    const errors: IErrors = {};
-    const values: IValues = {};
-    this.state = {
-      errors,
-      values
-    };
+  const [volunteer, setProject] = React.useState('')
+
+  const cancelToken = axios.CancelToken; //create cancel token
+  const [cancelTokenSource, setCancelTokenSource]: [
+    CancelTokenSource,
+    (cancelTokenSource: CancelTokenSource) => void
+  ] = React.useState(cancelToken.source());
+
+
+  const addNode = () =>{
+    axios
+      .post('https://Proyecto-2-BDA.ronnysantamaria.repl.co/api/add', "Hola")
   }
 
-  /**
-   * Returns whether there are any errors in the errors object that is passed in
-   * @param {IErrors} errors - The field errors
-   */
-  private haveErrors(errors: IErrors) {
-    let haveError: boolean = false;
-    Object.keys(errors).map((key: string) => {
-      if (errors[key].length > 0) {
-        haveError = true;
-      }
-    });
-    return haveError;
-  }
 
-  /**
-   * Handles form submission
-   * @param {React.FormEvent<HTMLFormElement>} e - The form event
-   */
-  private handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-
-    if (this.validateForm()) {
-      const submitSuccess: boolean = await this.submitForm();
-      this.setState({ submitSuccess });
-    }
+  const getData = () => {
+    axios
+      .get<IPost[]>('https://proyecto-2-bda.ronnysantamaria.repl.co/api/query4?volunteer='+ volunteer, {
+        cancelToken: cancelTokenSource.token,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        timeout: 10000,
+      })
+      .then((response) => {
+        setPosts(response.data);
+        setLoading(false);
+      })
+      .catch(err => console.log(err))
   };
 
-  /**
-   * Executes the validation rules for all the fields on the form and sets the error state
-   * @returns {boolean} - Whether the form is valid or not
-   */
-  private validateForm(): boolean {
-    // TODO - validate form
-    return true;
-  }
 
-  /**
-   * Submits the form to the http api
-   * @returns {boolean} - Whether the form submission was successful or not
-   */
-  private async submitForm(): Promise<boolean> {
-    // TODO - submit the form
-    return true;
-  }
-
-  public render() {
-    const { submitSuccess, errors } = this.state;
-    return (
-      <form onSubmit={this.handleSubmit} noValidate={true}>
+  return (
+    <TableContainer component={Paper}>
+    <form>
         <div className="container">
-          {/* TODO - render fields */}
           <div className="form-group">
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={this.haveErrors(errors)}
-            >
+          <TextField
+              fullWidth
+              id="text"
+              type="text"
+              label="Volunteer"
+              placeholder="Volunteer"
+              margin="normal"
+              onChange={event => setProject(event.target.value)}
+            />
+            <Button className="btn btn-primary" color="primary" onClick={addNode}>
               Submit
-            </button>
+            </Button>
           </div>
-          {submitSuccess && (
-            <div className="alert alert-info" role="alert">
-              The form was successfully submitted!
-            </div>
-          )}
-          {submitSuccess === false &&
-            !this.haveErrors(errors) && (
-              <div className="alert alert-danger" role="alert">
-                Sorry, an unexpected error has occurred
-              </div>
-            )}
-          {submitSuccess === false &&
-            this.haveErrors(errors) && (
-              <div className="alert alert-danger" role="alert">
-                Sorry, the form is invalid. Please review, adjust and try again
-              </div>
-            )}
         </div>
       </form>
-    );
-  }
-}
+    </TableContainer>
+  );
+};
 
-// import React, { useReducer, useEffect } from 'react';
-// import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-
-// import TextField from '@material-ui/core/TextField';
-// import Card from '@material-ui/core/Card';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardHeader from '@material-ui/core/CardHeader';
-// import Button from '@material-ui/core/Button';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     container: {
-//       display: 'flex',
-//       flexWrap: 'wrap',
-//       width: 400,
-//       margin: `${theme.spacing(0)} auto`
-//     },
-//     loginBtn: {
-//       marginTop: theme.spacing(2),
-//       flexGrow: 1
-//     },
-//     header: {
-//       textAlign: 'center',
-//       background: '#212121',
-//       color: '#fff'
-//     },
-//     card: {
-//       marginTop: theme.spacing(10)
-//     }
-//   })
-// );
-
-
-// type State = {
-//   ong: string
-//   password: string
-//   isButtonDisabled: boolean
-//   helperText: string
-//   isError: boolean
-// };
-
-// const initialState: State = {
-//   ong: '',
-//   password: '',
-//   isButtonDisabled: true,
-//   helperText: '',
-//   isError: false
-// };
-
-// type Action = { type: 'setONG_name', payload: string }
-//   | { type: 'setPassword', payload: string }
-//   | { type: 'setIsButtonDisabled', payload: boolean }
-//   | { type: 'loginSuccess', payload: string }
-//   | { type: 'loginFailed', payload: string }
-//   | { type: 'setIsError', payload: boolean };
-
-// const reducer = (state: State, action: Action): State => {
-//   switch (action.type) {
-//     case 'setONG_name':
-//       return {
-//         ...state,
-//         ong: action.payload
-//       };
-//     case 'setPassword':
-//       return {
-//         ...state,
-//         password: action.payload
-//       };
-//     case 'setIsButtonDisabled':
-//       return {
-//         ...state,
-//         isButtonDisabled: action.payload
-//       };
-//     case 'loginSuccess':
-//       return {
-//         ...state,
-//         helperText: action.payload,
-//         isError: false
-//       };
-//     case 'loginFailed':
-//       return {
-//         ...state,
-//         helperText: action.payload,
-//         isError: true
-//       };
-//     case 'setIsError':
-//       return {
-//         ...state,
-//         isError: action.payload
-//       };
-//   }
-// }
-
-
-
-// const Login = () => {
-//   const classes = useStyles();
-//   const [state, dispatch] = useReducer(reducer, initialState);
-
-//   useEffect(() => {
-//     if (state.ong.trim() && state.password.trim()) {
-//       dispatch({
-//         type: 'setIsButtonDisabled',
-//         payload: false
-//       });
-//     } else {
-//       dispatch({
-//         type: 'setIsButtonDisabled',
-//         payload: true
-//       });
-//     }
-//   }, [state.ong, state.password]);
-
-//   const handleLogin = () => {
-//     (async () => {
-//       const rawResponse = await fetch('http://localhost:5000/login', {
-//         method: 'POST',
-//         headers: {
-//           'Accept': 'application/json',
-//           'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify({ ong: state.ong, password: state.password }),
-//       });
-//       console.log(JSON.stringify({ ong: state.ong, password: state.password }))
-//       const content = await rawResponse.json()
-  
-//       console.log(content)
-//     })();
-//   };
-
-//   const handleKeyPress = (event: React.KeyboardEvent) => {
-//     if (event.keyCode === 13 || event.which === 13) {
-//       state.isButtonDisabled || handleLogin();
-//     }
-//   };
-
-//   const handleONG_nameChange: React.ChangeEventHandler<HTMLInputElement> =
-//     (event) => {
-//       dispatch({
-//         type: 'setONG_name',
-//         payload: event.target.value
-//       });
-//     };
-
-//   const handlePasswordChange: React.ChangeEventHandler<HTMLInputElement> =
-//     (event) => {
-//       dispatch({
-//         type: 'setPassword',
-//         payload: event.target.value
-//       });
-//     }
-
-
-//   return (
-//     <form className={classes.container} noValidate autoComplete="off">
-//       <Card className={classes.card}>
-//         <CardHeader className={classes.header} title="ONG NAME" />
-//         <CardContent>
-//           <div>
-//             <TextField
-//               error={state.isError}
-//               fullWidth
-//               id="ong"
-//               type="email"
-//               label="ONG"
-//               placeholder="ONG"
-//               margin="normal"
-//               onChange={handleONG_nameChange}
-//               onKeyPress={handleKeyPress}
-//             />
-//           </div>
-//         </CardContent>
-//         <CardActions>
-//           <Button
-//             variant="contained"
-//             size="large"
-//             color="primary"
-//             className={classes.loginBtn}
-//             onClick={handleLogin}
-//             disabled={state.isButtonDisabled}>
-//             Submit
-//           </Button>
-//         </CardActions>
-//       </Card>
-//     </form>
-//   );
-// }
-
-// export default Login;
+export default App;

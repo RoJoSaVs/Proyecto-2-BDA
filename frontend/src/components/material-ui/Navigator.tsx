@@ -126,7 +126,7 @@ function Navigator(props: NavigatorProps) {
                 <ListItemText classes={{primary: classes.itemPrimary,}}>Members</ListItemText>
             </ListItem>
 
-            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/addnode">
+            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/add_nodes">
                 <ListItemIcon className={classes.itemIcon}><AddToPhotosIcon /></ListItemIcon>
                 <ListItemText classes={{primary: classes.itemPrimary,}}>Create</ListItemText>
             </ListItem>

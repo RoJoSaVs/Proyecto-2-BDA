@@ -196,7 +196,7 @@ function Paperbase(props: PaperbaseProps) {
             <main className={classes.main}>
               {/*<Route exact path="/paperbase" component={Paperbase}></Route>*/}
                <Route exact path="/homepage" component={MainPageInfo}></Route>
-               <Route exact path="/addnode" component={AddData}></Route>
+               <Route exact path="/add_nodes" component={AddData}></Route>
                <Route exact path="/members" component={Members}></Route>
                <Route exact path="/showentities" component={ShowEntities}></Route>
                <Route exact path="/ong_associated_project" component={ONG_Associated_Project}></Route>
