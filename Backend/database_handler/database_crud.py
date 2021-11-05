@@ -2,14 +2,14 @@ import os
 from neo4j import GraphDatabase, WRITE_ACCESS
 
 
-# connection_string = os.environ['CONNECTION_STRING']
-# user = os.environ['USERNAME']
-# password = os.environ['PASSWORD']
+connection_string = os.environ['CONNECTION_STRING']
+user = os.environ['USERNAME']
+password = os.environ['PASSWORD']
 
 
-connection_string = "neo4j+s://0ee6a249.databases.neo4j.io"
-user = "neo4j"
-password = "3YlD9ks7Kz89vXMuvHZMSzzDalwbf8Ek-2dGMYF4pCA"
+# connection_string = "neo4j+s://0ee6a249.databases.neo4j.io"
+# user = "neo4j"
+# password = "3YlD9ks7Kz89vXMuvHZMSzzDalwbf8Ek-2dGMYF4pCA"
 
 # Create a connection between server and API, handle queries and return fetched data from DB server
 class DriverLifecycleCRUD:
