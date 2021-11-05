@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+.replit
+
+creation_script.txt
+*__pycache__*
+
+*.pyc
