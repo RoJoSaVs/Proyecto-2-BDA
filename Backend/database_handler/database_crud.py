@@ -25,11 +25,11 @@ class DriverLifecycleCRUD:
     # Receive a query string and execute it
     # Receive also a parameter to search for data or create relations
     # Return a list with fetched data
-    def query_handler(self, query_string, query_Value, p_name):
+    def query_handler(self, query_string, query_Value, project_name):
         try:
             nodes = []
             session = self.driver.session(default_access_mode = WRITE_ACCESS)
-            result = session.run(query_string, query_Value = query_Value, p_name = p_name)
+            result = session.run(query_string, query_Value = query_Value, project_name = project_name)
             for item in result:
                 nodes.append(item.data())
             session.close()

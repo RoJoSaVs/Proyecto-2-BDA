@@ -2,6 +2,7 @@ from models.ong import *
 from models.project import *
 from models.volunteer import *
 import json
+import sys
 
 
 # Receives a type of class string and its attributes and returns an instance of that type with those attributes
@@ -24,14 +25,15 @@ def create_instance(type, attributes):
 
 def json_creation_parse(instance_type, json_string):
     attributes = []
-    if (type.lower() == "ong"):
+    # print(json_string, file=sys.stderr)
+    if (instance_type.lower() == "ong"):
         attributes.append(json_string['name'])
         attributes.append(json_string['country'])
-    elif (type.lower() == "volunteer"):
+    elif (instance_type.lower() == "volunteer"):
         attributes.append(json_string['name'])
         attributes.append(json_string['age'])
         attributes.append(json_string['country'])
-    elif (type.lower() == "project"):
+    elif (instance_type.lower() == "project"):
         attributes.append(json_string['name'])
         attributes.append(json_string['country'])
         attributes.append(json_string['reach'])
