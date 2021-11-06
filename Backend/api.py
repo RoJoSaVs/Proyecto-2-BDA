@@ -1,8 +1,11 @@
+# from main import *
+import sys
 from query_handler import *
 import flask
 from flask import request, jsonify, g, render_template, abort
 from flask_cors import CORS, cross_origin
 import json
+
 
 app = flask.Flask(__name__)
 CORS(app, support_credentials=True)
@@ -30,8 +33,11 @@ def api_all():
 def add_single_node():
     try:
         data = request.json
+        print(data, file=sys.stderr)
         node_type = data['type']
-        attributes = jsonjson_creation_parse(node_type, data)
+        print(node_type, file=sys.stderr)
+        attributes = json_creation_parse(node_type, data)
+        print("data", file=sys.stderr)
         return jsonify(create_node_entity(node_type, attributes))
     except:
         abort(404)
