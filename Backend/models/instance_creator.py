@@ -25,7 +25,7 @@ def create_instance(type, attributes):
 
 def json_creation_parse(instance_type, json_string):
     attributes = []
-    print(data, file=sys.stderr)
+    # print(json_string, file=sys.stderr)
     if (instance_type.lower() == "ong"):
         attributes.append(json_string['name'])
         attributes.append(json_string['country'])

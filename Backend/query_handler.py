@@ -11,7 +11,7 @@ def create_node_entity(instance_type, attributes):
 # Create a relation between VOLUNTEER and PROJECT
 def create_relation_volunteer_project(volunteer, project):
 	query_string_volunteer_project = (" MATCH (v:Volunteer {v_name: $query_Value}) "
-	                                  " MATCH (p:Project {p_name: $p_name}) "
+	                                  " MATCH (p:Project {p_name: $project_name}) "
 	                                  " CREATE(v)-[:works_on]->(p) "
 	                                  " RETURN v, p")
 	response = database_crud.query_handler(query_string_volunteer_project, volunteer, project)
@@ -20,7 +20,7 @@ def create_relation_volunteer_project(volunteer, project):
 # Create a relation between ONG and PROJECT
 def create_relation_ong_project(ong, project):
 	query_string_ong_project = (" MATCH (o:ONG {o_name: $query_Value}) "
-                                " MATCH (p:Project {p_name: $p_name}) "
+                                " MATCH (p:Project {p_name: $project_name}) "
                                 " CREATE(o)-[:develops]->(p) "
                                 " RETURN o, p")
 	response = database_crud.query_handler(query_string_ong_project, ong, project)
@@ -56,3 +56,13 @@ def get_query_5():
 	query5 = "MATCH (p:Project) RETURN p.p_reach AS p_reach, count(p.p_reach) AS count"
 	response = database_crud.query_handler(query5, None, None)
 	return response
+
+def get_ong_project():
+  get_Data = "MATCH (o:ONG), (p:Project) RETURN o.o_name AS o_name, p.p_name AS p_name"
+  response = database_crud.query_handler(get_Data, None, None)
+  return response
+
+def get_volunteer_project():
+  get_Data = "MATCH (v:Volunteer), (p:Project) RETURN v.v_name AS v_name, p.p_name AS p_name"
+  response = database_crud.query_handler(get_Data, None, None)
+  return response

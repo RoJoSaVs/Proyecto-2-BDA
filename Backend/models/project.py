@@ -14,4 +14,4 @@ class Project(Model):
     # Returns query string with all attributes needed
     def get_creation_string(self):
         attributes = self.get_attributes()
-        return "CREATE (p:Project {p_name: '" + attributes[0] + "', p_country: '" + attributes[1] + "', p_reach: '" + attributes[2] + ", p_duration: " + str(attributes[3]) + "})"
+        return "CREATE (p:Project {p_name: '" + attributes[0] + "', p_country: '" + attributes[1] + "', p_reach: '" + attributes[2] + "', p_duration: " + str(attributes[3]) + "})"
