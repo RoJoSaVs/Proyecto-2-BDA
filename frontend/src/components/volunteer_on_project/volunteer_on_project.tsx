@@ -108,19 +108,9 @@ const App = () => {
     ''
   );
   // ONG Values
-  const [ong_name, setOngName] = React.useState('')
-  const [ong_country, setOngCountry] = React.useState('')
-
-  // Project Values
   const [project_name, setProjectName] = React.useState('')
-  const [project_country, setProjectCountry] = React.useState('')
-  const [project_reach, setProjectReach] = React.useState('')
-  const [project_duration, setProjectDuration] = React.useState('')
-
   // Volunteer Values
   const [volunteer_name, setVolunteerName] = React.useState('')
-  const [volunteer_age, setVolunteerAge] = React.useState('')
-  const [volunteer_country, setVolunteerCountry] = React.useState('')
 
   const cancelToken = axios.CancelToken; //create cancel token
   const [cancelTokenSource, setCancelTokenSource]: [
@@ -129,9 +119,9 @@ const App = () => {
   ] = React.useState(cancelToken.source());
 
 
-  const addOng = () =>{
+  const addVolunteerOnProject = () =>{
     axios
-      .post('https://Proyecto-2-BDA.ronnysantamaria.repl.co/api/add', { "type": "ong", "name": ong_name, "country": ong_country, })
+      .post('https://Proyecto-2-BDA.ronnysantamaria.repl.co/api/relation/volunteer', { "project": project_name, "volunteer": volunteer_name, })
       .then(function (response) {
         console.log(response);
       })
@@ -140,27 +130,7 @@ const App = () => {
       });
       }
 
-  const addProject = () =>{
-    axios
-      .post('https://Proyecto-2-BDA.ronnysantamaria.repl.co/api/add', { "type": "project", "name": project_name, "country": project_country, "reach": project_reach, "duration": parseInt(project_duration) })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      }
-
-  const addVolunteer = () =>{
-    axios
-      .post('https://Proyecto-2-BDA.ronnysantamaria.repl.co/api/add', { "type": "volunteer", "name": volunteer_name, "country": volunteer_country, "age": parseInt(volunteer_age) })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-      }
+  
   // const getData = () => {
   //   axios
   //     .get<IPost[]>('https://proyecto-2-bda.ronnysantamaria.repl.co/api/query4?volunteer='+ volunteer, {
@@ -181,52 +151,19 @@ const App = () => {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <Card className={classes.card}>
-        <CardHeader className={classes.header} title="ONG" />
+        <CardHeader className={classes.header} title="Volunteer On Project" />
         <CardContent>
           <div>
-            <TextField fullWidth id="ong_name" type="text" label="Name" placeholder="Name" onChange={event => setOngName(event.target.value)}/>
-            <TextField fullWidth id="ong_country" type="text" label="Country" placeholder="Country" onChange={event => setOngCountry(event.target.value)}/>
+            <TextField fullWidth id="project_name" type="text" label="Project Name" placeholder="Project Name" onChange={event => setProjectName(event.target.value)}/>
+            <TextField fullWidth id="volunteer_country" type="text" label="Volunteer Name" placeholder="Volunteer Name" onChange={event => setVolunteerName(event.target.value)}/>
           </div>
         </CardContent>
         <CardActions>
-          <Button variant="contained" size="large" color="primary" onClick={addOng}>
+          <Button variant="contained" size="large" color="primary" onClick={addVolunteerOnProject}>
             Submit
           </Button>
         </CardActions>
       </Card>
-      <form className={classes.container} noValidate autoComplete="off">
-      <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Project" />
-        <CardContent>
-          <div>
-            <TextField id="project_name" type="text" label="Name" placeholder="Name" margin="normal" onChange={event => setProjectName(event.target.value)}/>
-            <TextField id="project_country" type="text" label="Country" placeholder="Country" margin="normal" onChange={event => setProjectCountry(event.target.value)}/>
-            <TextField id="project_reach" type="text" label="Reach" placeholder="Reach" margin="normal" onChange={event => setProjectReach(event.target.value)}/>
-            <TextField id="project_duration" type="text" label="Duration" placeholder="Duration" margin="normal" onChange={event => setProjectDuration(event.target.value)}/>
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button variant="contained" size="large" color="primary" onClick={addProject}>
-            Submit
-          </Button>
-        </CardActions>
-      </Card>
-      <Card className={classes.card}>
-        <CardHeader className={classes.header} title="Volunteer" />
-        <CardContent>
-          <div>
-            <TextField fullWidth id="volunteer_name" type="text" label="Name" placeholder="Name" onChange={event => setVolunteerName(event.target.value)}/>
-            <TextField fullWidth id="volunteer_country" type="text" label="Country" placeholder="Country" onChange={event => setVolunteerCountry(event.target.value)}/>
-            <TextField fullWidth id="volunteer_age" type="text" label="Age" placeholder="Age" onChange={event => setVolunteerAge(event.target.value)}/>
-          </div>
-        </CardContent>
-        <CardActions>
-          <Button variant="contained" size="large" color="primary" onClick={addVolunteer}>
-            Submit
-          </Button>
-        </CardActions>
-      </Card>
-    </form>
     </form>
   );
 };

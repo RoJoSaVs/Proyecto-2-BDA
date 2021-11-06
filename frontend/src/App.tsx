@@ -12,6 +12,8 @@ import Header from './components/material-ui/Header';
 
 import MainPageInfo from './components/show_data/show_data';
 import AddData from './components/add_nodes/add_node';
+import Volunteer_On_Project from './components/volunteer_on_project/volunteer_on_project';
+import Project_On_ONG from './components/project_on_ong/project_on_ong';
 import ONG_Associated_Project from './components/ong_associated_project/ong_associated_project';
 import Project_Volunteer from './components/project_volunteers/project_volunteers';
 import Volunteer_Per_Project from './components/volunteer_per_project/volunteer_per_project';
@@ -196,8 +198,10 @@ function Paperbase(props: PaperbaseProps) {
             <main className={classes.main}>
               {/*<Route exact path="/paperbase" component={Paperbase}></Route>*/}
                <Route exact path="/homepage" component={MainPageInfo}></Route>
-               <Route exact path="/add_nodes" component={AddData}></Route>
                <Route exact path="/members" component={Members}></Route>
+               <Route exact path="/add_nodes" component={AddData}></Route>
+               <Route exact path="/volunteer_on_project" component={Volunteer_On_Project}></Route>
+               <Route exact path="/project_on_ong" component={Project_On_ONG}></Route>
                <Route exact path="/showentities" component={ShowEntities}></Route>
                <Route exact path="/ong_associated_project" component={ONG_Associated_Project}></Route>
                <Route exact path="/project_volunteers" component={Project_Volunteer}></Route>

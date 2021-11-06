@@ -130,11 +130,11 @@ function Navigator(props: NavigatorProps) {
                 <ListItemIcon className={classes.itemIcon}><AddToPhotosIcon /></ListItemIcon>
                 <ListItemText classes={{primary: classes.itemPrimary,}}>Create</ListItemText>
             </ListItem>
-            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/showentities">
+            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/volunteer_on_project">
                 <ListItemIcon className={classes.itemIcon}><AttributionIcon /></ListItemIcon>
                 <ListItemText classes={{primary: classes.itemPrimary,}}>Volunteer on Project</ListItemText>
             </ListItem>
-            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/showentities">
+            <ListItem button className={clsx(classes.item, true && classes.itemActiveItem)} component={Link} to="/project_on_ong">
                 <ListItemIcon className={classes.itemIcon}><RedditIcon /></ListItemIcon>
                 <ListItemText classes={{primary: classes.itemPrimary,}}>Project on ONG</ListItemText>
             </ListItem>
